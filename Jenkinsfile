@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Nexus Push'){
             steps{
-                withCredentials([string(credentialsId: 'nexus-pwd', variable: 'nexusPwd')]) {
+                withCredentials([usernamePassword(credentialsId: 'nexus-pwd', passwordVariable: 'nexuspwd', usernameVariable: 'admin')]) {
                     sh "docker login -u admin -p ${nexusPwd} ${NEXUS_URL}"
                     sh "docker push ${IMAGE_URL_WITH_TAG}"
                 }
